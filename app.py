@@ -6,9 +6,11 @@ app = Flask(__name__)
 def hello_world():
     return "Hello World from Matthew Etter in 3308"
 
+
+# test db connection
 @app.route('/db_test')
 def db_test():
-    conn = psycopg2.connect("postgresql://glassware_db_user:BUQZeeMOe5wrTWcgSCYZkOfUMHSolGrS@dpg-dbke6lo8v5cc738cdgkg-a.oregon-postgres.render.com/glassware_db")
+    conn = psycopg2.connect("postgresql://glassware_db_user:BUQZeeMOe5wrTWcgSCYZkOfUMHSolGrS@dpg-dbke6lo8v5cc738cdgkg-a/glassware_db")
     conn.close()
     return "Database connection successful"
 
@@ -16,7 +18,7 @@ def db_test():
 # create the initial basketball table
 @app.route('/db_create')
 def db_create():
-    conn = psycopg2.connect("postgresql://glassware_db_user:BUQZeeMOe5wrTWcgSCYZkOfUMHSolGrS@dpg-dbke6lo8v5cc738cdgkg-a.oregon-postgres.render.com/glassware_db")
+    conn = psycopg2.connect("postgresql://glassware_db_user:BUQZeeMOe5wrTWcgSCYZkOfUMHSolGrS@dpg-dbke6lo8v5cc738cdgkg-a/glassware_db")
     cur = conn.cursor()
     cur.execute('''
         CREATE TABLE IF NOT EXISTS Basketball(
@@ -35,7 +37,7 @@ def db_create():
 # populate table
 @app.route('/db_insert')
 def inserting():
-    conn = psycopg2.connect("postgresql://glassware_db_user:BUQZeeMOe5wrTWcgSCYZkOfUMHSolGrS@dpg-dbke6lo8v5cc738cdgkg-a.oregon-postgres.render.com/glassware_db")
+    conn = psycopg2.connect("postgresql://glassware_db_user:BUQZeeMOe5wrTWcgSCYZkOfUMHSolGrS@dpg-dbke6lo8v5cc738cdgkg-a/glassware_db")
     cur = conn.cursor()
     cur.execute('''
         INSERT INTO Basketball (First, Last, City, Name, Number)
@@ -50,10 +52,10 @@ def inserting():
     conn.close()
     return "Basketball table successfully populated!"
 
-# 
+# get info back out of db
 @app.route('/db_select')
 def selecting():
-    conn = psycopg2.connect("postgresql://glassware_db_user:BUQZeeMOe5wrTWcgSCYZkOfUMHSolGrS@dpg-dbke6lo8v5cc738cdgkg-a.oregon-postgres.render.com/glassware_db")
+    conn = psycopg2.connect("postgresql://glassware_db_user:BUQZeeMOe5wrTWcgSCYZkOfUMHSolGrS@dpg-dbke6lo8v5cc738cdgkg-a/glassware_db")
     cur = conn.cursor()
     cur.execute('''
         SELECT * FROM Basketball;
@@ -71,9 +73,10 @@ def selecting():
     return response_string
 
 
+# clear the table we created
 @app.route('/db_drop')
 def dropping():
-    conn = psycopg2.connect("postgresql://glassware_db_user:BUQZeeMOe5wrTWcgSCYZkOfUMHSolGrS@dpg-dbke6lo8v5cc738cdgkg-a.oregon-postgres.render.com/glassware_db")
+    conn = psycopg2.connect("postgresql://glassware_db_user:BUQZeeMOe5wrTWcgSCYZkOfUMHSolGrS@dpg-dbke6lo8v5cc738cdgkg-a/glassware_db")
     cur = conn.cursor()
     cur.execute('''
         DROP TABLE Basketball;
